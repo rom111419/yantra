@@ -1,0 +1,38 @@
+<div class="signup-form-container">
+  <h1>Sign Up</h1>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" formControlName="firstName" />
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" formControlName="lastName" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" />
+      <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.dirty">
+        <small class="error-message">Invalid email address.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password" />
+      <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.dirty">
+        <small class="error-message">
+          Password must be at least 8 characters long and contain lowercase and uppercase letters and should not contain the first or last name.
+        </small>
+        <small class="error-message" *ngIf="userForm.get('password')?.errors?.invalidPassword">
+          Password does not meet the criteria.
+        </small>
+      </div>
+    </div>
+    <button type="submit" [disabled]="userForm.invalid">
+      Submit
+    </button>
+  </form>
+  <div *ngIf="userForm.get('firstName')?.value || userForm.get('lastName')?.value">
+    <h3>Full Name: {{ userForm.get('firstName')?.value }} {{ userForm.get('lastName')?.value }}</h3>
+  </div>
+</div>
